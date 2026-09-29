@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>บันทึกตั๋วหนัง ticket memmory</title>
+<meta name="description" content="เก็บทุกตั๋วหนังของคุณให้เป็นความทรงจำตลอดไป">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="บันทึกตั๋วหนัง ticket memmory">
+<meta property="og:description" content="เก็บทุกตั๋วหนังของคุณให้เป็นความทรงจำตลอดไป">
+<meta property="og:image" content="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGw3Y2ZiNDVncmdwMGpnOGpkNXRwZzhoOGc3MnIwYTZxeGJtaTgweCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2knAJMAhrUJvTbHJv6/giphy.gif">
+<meta property="og:image:type" content="image/gif">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="บันทึกตั๋วหนัง ticket memmory">
+<meta name="twitter:description" content="เก็บทุกตั๋วหนังของคุณให้เป็นความทรงจำตลอดไป">
+<meta name="twitter:image" content="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGw3Y2ZiNDVncmdwMGpnOGpkNXRwZzhoOGc3MnIwYTZxeGJtaTgweCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2knAJMAhrUJvTbHJv6/giphy.gif">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Big+Shoulders+Display:wght@700;800&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ambient-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="marquee"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>บันทึกตั๋วหนัง</h1>
+      <p>เก็บทุกตั๋วหนังของคุณให้เป็นความทรงจำตลอดไป</p>
+    </div>
+    <div class="top-actions">
+      <a href="donate.html" class="icon-btn coffee-link" title="Buy Me a Coffee / สนับสนุนผู้พัฒนา">☕</a>
+      <button class="icon-btn" id="wrappedBtn" title="สรุปท้ายปี">🎁</button>
+      <button class="icon-btn" id="themeBtn" title="สลับธีม">🌙</button>
+      <button class="btn-primary" id="addBtn">＋ เพิ่มตั๋ว</button>
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="toolbar">
+    <input type="text" id="toolSearch" placeholder="🔍 ค้นหาชื่อเรื่อง, รีวิว, ชื่อคนดู, โรงหนัง...">
+    <select id="filterGenre"><option value="all">ทุกแนว</option></select>
+    <select id="filterCompanion"><option value="all">ดูกับใคร: ทั้งหมด</option></select>
+    <select id="toolSort">
+      <option value="new">ใหม่สุดก่อน</option>
+      <option value="old">เก่าสุดก่อน</option>
+      <option value="priceHigh">ราคาสูง-ต่ำ</option>
+      <option value="priceLow">ราคาต่ำ-สูง</option>
+      <option value="az">ชื่อเรื่อง A-Z</option>
+    </select>
+    <div class="view-toggle">
+      <button data-view="grid" class="active" id="viewGridBtn">กริด</button>
+      <button data-view="timeline" id="viewTimelineBtn">ไทม์ไลน์</button>
+    </div>
+  </div>
+
+  <div id="emptyState" class="empty" style="display:none">
+    <h3>ยังไม่มีตั๋วในสมุด</h3>
+    <p>กด "＋ เพิ่มตั๋ว" เพื่อบันทึกหนังเรื่องแรกของคุณ (ค้นหาโปสเตอร์จาก TMDb ได้ทันที)</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h2 id="modalTitle">เพิ่มตั๋วหนัง</h2>
+    <div class="field">
+      <label>โปสเตอร์หนัง (อัปโหลด หรือ ค้นหาจาก TMDb)</label>
+      <div class="poster-drop" id="posterDrop">
+        <div class="ph" id="posterPh">🎬</div>
+        <img id="posterPreview" style="display:none" alt="Poster preview">
+        <span style="font-size:13px;color:var(--text2)">แตะเพื่ออัปโหลดรูปจากเครื่อง หรือค้นหาจากช่องด้านล่าง</span>
+      </div>
+      <input type="file" accept="image/*" id="posterInput" style="display:none">
+      <div class="poster-search" id="posterSearch">
+        <div class="ps-row" id="psSearchRow">
+          <input type="text" id="psQuery" placeholder="พิมพ์ชื่อหนังไทยหรืออังกฤษเพื่อดึงโปสเตอร์...">
+          <button type="button" class="mini-btn" id="psSearchBtn">🔍 ค้นหา</button>
+        </div>
+        <div class="ps-results" id="psResults"></div>
+      </div>
+    </div>
+
+    <div class="field"><label>ชื่อเรื่อง</label><input type="text" id="fTitle" placeholder="เช่น Dune: Part Two"></div>
+    <div class="row2">
+      <div class="field">
+        <label>ดูกับใคร</label>
+        <select id="fCompanion">
+          <option value="alone">🎬 ดูคนเดียว</option>
+          <option value="partner">💑 กับแฟน</option>
+          <option value="friends">👯 กับเพื่อน</option>
+          <option value="family">👨‍👩‍👧 กับครอบครัว</option>
+          <option value="group">🎉 กลุ่มใหญ่</option>
+        </select>
+      </div>
+      <div class="field"><label>ชื่อ (ถ้ามี)</label><input type="text" id="fCompanionName" placeholder="เช่น กัส"></div>
+    </div>
+    <label class="chk"><input type="checkbox" id="fHome"> 🏠 ดูที่บ้าน (สตรีมมิ่ง)</label>
+    <div class="row2">
+      <div class="field"><label>วันที่</label><input type="date" id="fDate"></div>
+      <div class="field" id="timeField"><label>เวลา</label><input type="time" id="fTime"></div>
+    </div>
+    <div class="row2" id="cinemaRow">
+      <div class="field"><label id="lblCinema">โรงภาพยนตร์</label><input type="text" id="fCinema" placeholder="เช่น SF World CentralWorld"></div>
+      <div class="field"><label id="lblSeat">ที่นั่ง</label><input type="text" id="fSeat" placeholder="เช่น G12"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>ราคา (บาท)</label><input type="number" id="fPrice" placeholder="220"></div>
+      <div class="field">
+        <label>แนวหนัง</label>
+        <select id="fGenre"><option value="">ไม่ระบุ</option></select>
+      </div>
+    </div>
+    <div class="field">
+      <label>ให้คะแนน</label>
+      <div class="stars" id="starInput"></div>
+    </div>
+    <div class="field">
+      <label>ความรู้สึกหลังดู</label>
+      <div class="mood-picker" id="moodPicker"></div>
+    </div>
+    <div class="field"><label>รีวิวสั้น ๆ</label><textarea id="fReview" maxlength="140" rows="2" placeholder="ประทับใจตรงไหน จำอะไรได้บ้าง..."></textarea></div>
+
+    <div class="field">
+      <label>สีธีมตั๋ว</label>
+      <div class="swatches" id="swatches"></div>
+      <input type="color" id="fColor" value="#cda255" style="width:36px;height:30px;border:none;background:none;cursor:pointer;">
+    </div>
+    <div class="field">
+      <label>ลวดลายแก้ว</label>
+      <div class="tpl-opts" id="tplOpts">
+        <button type="button" data-tpl="plain" class="active">คริสตัลใส</button>
+        <button type="button" data-tpl="holo">โฮโลแกรม</button>
+        <button type="button" data-tpl="strip">ฟิล์มหนัง</button>
+        <button type="button" data-tpl="stars">ดาวกระจาย</button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelBtn">ยกเลิก</button>
+      <button class="btn-primary" id="saveBtn">บันทึกตั๋ว</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="wrappedOverlay">
+  <div class="modal wrapped-modal">
+    <div class="wrapped-card" id="wrappedCard">
+      <span class="wrapped-eyebrow">✦ MOVIE WRAPPED ✦</span>
+      <select id="wrappedYear" class="wrapped-year"></select>
+      <div class="wrapped-big" id="wrappedTotal">0 เรื่อง</div>
+      <div class="wrapped-grid" id="wrappedGrid"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="wrappedCloseBtn">ปิด</button>
+      <button class="btn-primary" id="wrappedDlBtn">⬇ ดาวน์โหลดสรุป</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

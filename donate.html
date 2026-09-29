@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buy Me a Coffee — สนับสนุนสมุดตั๋วหนัง</title>
+<meta name="description" content="ร่วมสนับสนุนค่ากาแฟและป๊อปคอร์นให้ผู้พัฒนาสมุดตั๋วหนัง">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Buy Me a Coffee — สนับสนุนสมุดตั๋วหนัง">
+<meta property="og:description" content="ร่วมสนับสนุนค่ากาแฟและป๊อปคอร์นให้ผู้พัฒนาสมุดตั๋วหนัง">
+<meta property="og:image" content="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGw3Y2ZiNDVncmdwMGpnOGpkNXRwZzhoOGc3MnIwYTZxeGJtaTgweCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2knAJMAhrUJvTbHJv6/giphy.gif">
+<meta property="og:image:type" content="image/gif">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Big+Shoulders+Display:wght@700;800&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="donate.css">
+</head>
+<body>
+<div class="ambient-orbs" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="marquee"></div>
+<div class="wrap donate-wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>BUY ME A COFFEE</h1>
+      <p>เติมพลังคาเฟอีนและป๊อปคอร์นให้ผู้พัฒนาสร้างฟีเจอร์ใหม่ ๆ ต่อไป</p>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" title="สลับธีม">🌙</button>
+      <a href="index.html" class="btn-primary">← กลับหน้าสมุดตั๋ว</a>
+    </div>
+  </header>
+
+  <div class="donate-grid">
+    <section class="glass-box">
+      <div class="section-badge">✦ CHOOSE YOUR TREAT</div>
+      <h2>เลือกเมนูที่อยากเลี้ยง</h2>
+
+      <div class="tier-grid" id="tierGrid">
+        <button type="button" class="tier-card active" data-item="ICED AMERICANO" data-icon="☕" data-amt="50">
+          <span class="tier-ico">☕</span>
+          <div class="tier-info">
+            <strong>อเมริกาโน่เย็น</strong>
+            <small>แก้ง่วงตอนดึก ๆ</small>
+          </div>
+          <span class="tier-price">฿50</span>
+        </button>
+
+        <button type="button" class="tier-card" data-item="CARAMEL POPCORN" data-icon="🍿" data-amt="99">
+          <span class="tier-ico">🍿</span>
+          <div class="tier-info">
+            <strong>ป๊อปคอร์นคาราเมล</strong>
+            <small>ของคู่ใจสายเก็บตั๋วหนัง</small>
+          </div>
+          <span class="tier-price">฿99</span>
+        </button>
+
+        <button type="button" class="tier-card" data-item="IMAX VIP SEAT" data-icon="🎟️" data-amt="199">
+          <span class="tier-ico">🎟️</span>
+          <div class="tier-info">
+            <strong>ตั๋วหนังรอบพิเศษ</strong>
+            <small>สนับสนุนเซิร์ฟเวอร์ </small>
+          </div>
+          <span class="tier-price">฿199</span>
+        </button>
+      </div>
+
+      <div class="row2" style="margin-top:16px;">
+        <div class="field">
+          <label>ชื่อของคุณ.......</label>
+          <input type="text" id="supporterName" placeholder="เช่น  ผู้สนับสนุนใจดี" maxlength="28">
+        </div>
+        <div class="field">
+          <label>จำนวนเงิน (บาท)</label>
+          <input type="number" id="customAmount" value="50" min="1">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>ข้อความให้กำลังใจ</label>
+        <input type="text" id="supporterMsg" value="ขอให้เว็บตั๋วหนังปัง ๆ ยิ่งขึ้นไป!" maxlength="60">
+      </div>
+
+      <div class="pay-box">
+        <div class="qr-glass-frame">
+          <img id="donateQrImg" alt="QR Code">
+          <span class="qr-caption">สแกน QR เพื่อสนับสนุน</span>
+        </div>
+
+        <div class="pay-details">
+          <div class="acc-pill">
+            <small>พร้อมเพย์ / เลขบัญชี</small>
+            <strong id="accNum">0801138627 (พร้อมเพย์)</strong>
+          </div>
+          <button type="button" class="mini-btn copy-btn" id="copyAccBtn">📋 คัดลอกเบอร์พร้อมเพย์</button>
+          <a href="https://www.buymeacoffee.com/" target="_blank" rel="noopener" class="bmc-external-btn">
+            ☕ ไปที่หน้า Buy Me a Coffee
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="souvenir-col">
+      <div class="section-badge">✦ SUPPORTER VIP PASS</div>
+      <h3>ตั๋วที่ระลึกสำหรับคุณ</h3>
+      <p class="sub-hint">เมื่อสนับสนุนแล้ว กดรับตั๋วทองคำใบนี้เก็บไว้เป็นที่ระลึกได้เลย!</p>
+
+      <div class="ticket vip-ticket" id="vipTicketCard">
+        <div class="t-poster vip-poster">
+          <div class="vip-icon" id="vipIcon">☕</div>
+          <span class="vip-stamp">VIP PATRON</span>
+        </div>
+        <span class="t-serial" id="vipSerial">NO. VIP-2026</span>
+        <div class="t-div"></div>
+        <div class="t-stub">
+          <div class="t-head">
+            <h3 class="t-title" id="vipItemTitle">ICED AMERICANO</h3>
+            <span class="badge">💛 SUPPORTER</span>
+          </div>
+          <div class="t-tags">
+            <span class="badge outline" id="vipSupporterTag">🌟 คุณผู้สนับสนุนใจดี</span>
+          </div>
+          <div class="t-facts">
+            <div><label>วันที่</label><span id="vipDate">—</span></div>
+            <div><label>สถานะ</label><span>VERIFIED VIP</span></div>
+            <div><label>ยอดสนับสนุน</label><span id="vipAmount">฿50</span></div>
+            <div><label>ที่นั่งพิเศษ</label><span>ROW A · VIP 01</span></div>
+          </div>
+          <div class="t-review" id="vipMessage">"ขอให้เว็บตั๋วหนังปัง ๆ ยิ่งขึ้นไป!"</div>
+          <div class="t-footer">
+            <div class="t-qr-box">
+              <img id="vipTicketQr" alt="VIP QR">
+              <div class="t-qr-meta">
+                <small>THANK YOU</small>
+                <b>#PATRON</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vip-actions">
+        <button type="button" class="btn-primary full-btn" id="cheersBtn">🎉 ส่งกำลังใจ & ดาวน์โหลดตั๋วที่ระลึก</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="toast" id="toast">คัดลอกเรียบร้อยแล้ว!</div>
+
+<script src="donate.js"></script>
+</body>
+</html>
