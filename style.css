@@ -293,4 +293,13 @@ textarea#fReview{width:100%; min-height:80px; resize:vertical; padding:10px 12px
 .ps-results::-webkit-scrollbar-thumb{background:rgba(255,255,255,.22); border-radius:999px; border:2px solid transparent; background-clip:padding-box;}
 .ps-results img{width:60px; height:88px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; transition:border-color .15s ease, transform .15s ease;}
 .ps-results img:hover{border-color:var(--brass); transform:translateY(-2px) scale(1.04);}
-.ps-hint{font-size:12px; color:var(--text2); padding:4px 2px;}
+.ps-hint{font-size:12px; color:var(--text2); padding:4px 2px;} 
+.help-modal{max-width:560px;}
+.help-modal h3{font-size:15px; color:var(--accent); margin:20px 0 6px; font-weight:700;}
+.help-modal p, .help-modal li{font-size:14px; line-height:1.7; color:var(--text1);}
+.help-modal .help-intro{color:var(--text2); margin:0 0 4px;}
+.help-modal ol, .help-modal ul{margin:6px 0; padding-left:22px;}
+.help-modal li{margin-bottom:5px;}
+.help-warn{margin-top:20px; padding:14px 16px; border-radius:16px; border:1px solid var(--glass-brd); background:rgba(226,184,107,.12);}
+.help-warn b{font-size:14px;}
+.help-warn ul{margin:8px 0 0;}
