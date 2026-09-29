@@ -487,3 +487,17 @@ document.getElementById('themeBtn').onclick = ()=>{
 };
 
 render();
+ 
+(function initHelp(){
+  const ov = document.getElementById('helpOverlay');
+  const open = ()=> ov.classList.add('show');
+  const close = ()=>{
+    ov.classList.remove('show');
+    try{ localStorage.setItem('ticket-help-seen','1'); }catch(e){}
+  };
+  document.getElementById('helpBtn').onclick = open;
+  document.getElementById('helpCloseBtn').onclick = close;
+  ov.onclick = (e)=>{ if(e.target===ov) close(); };
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && ov.classList.contains('show')) close(); }); 
+  try{ if(!localStorage.getItem('ticket-help-seen')) open(); }catch(e){}
+})();
