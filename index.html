@@ -69,7 +69,7 @@
 
   <div id="emptyState" class="empty" style="display:none">
     <h3>ยังไม่มีตั๋วในสมุด</h3>
-    <p>กด "＋ เพิ่มตั๋ว" เพื่อบันทึกหนังเรื่องแรกของคุณ (ค้นหาโปสเตอร์จาก TMDb ได้ทันที)</p>
+    <p>กด "＋ เพิ่มตั๋ว" เพื่อบันทึกหนังเรื่องแรกของคุณ (ค้นหาโปสเตอร์ได้ทันที)</p>
   </div>
 
   <div class="grid" id="grid"></div>
@@ -79,7 +79,7 @@
   <div class="modal">
     <h2 id="modalTitle">เพิ่มตั๋วหนัง</h2>
     <div class="field">
-      <label>โปสเตอร์หนัง (อัปโหลด หรือ ค้นหาจาก TMDb)</label>
+      <label>โปสเตอร์หนัง (อัปโหลด)</label>
       <div class="poster-drop" id="posterDrop">
         <div class="ph" id="posterPh">🎬</div>
         <img id="posterPreview" style="display:none" alt="Poster preview">
@@ -88,7 +88,7 @@
       <input type="file" accept="image/*" id="posterInput" style="display:none">
       <div class="poster-search" id="posterSearch">
         <div class="ps-row" id="psSearchRow">
-          <input type="text" id="psQuery" placeholder="พิมพ์ชื่อหนังไทยหรืออังกฤษเพื่อดึงโปสเตอร์...">
+          <input type="text" id="psQuery" placeholder="พิมพ์ชื่อหนังไพื่อดึงโปสเตอร์...">
           <button type="button" class="mini-btn" id="psSearchBtn">🔍 ค้นหา</button>
         </div>
         <div class="ps-results" id="psResults"></div>
@@ -109,7 +109,7 @@
       </div>
       <div class="field"><label>ชื่อ (ถ้ามี)</label><input type="text" id="fCompanionName" placeholder="เช่น กัส"></div>
     </div>
-    <label class="chk"><input type="checkbox" id="fHome"> 🏠 ดูที่บ้าน (สตรีมมิ่ง)</label>
+    <label class="chk"><input type="checkbox" id="fHome"> 🏠 ดูที่บ้าน </label>
     <div class="row2">
       <div class="field"><label>วันที่</label><input type="date" id="fDate"></div>
       <div class="field" id="timeField"><label>เวลา</label><input type="time" id="fTime"></div>
